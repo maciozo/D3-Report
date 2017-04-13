@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EL/EEE D1 Report Template
+% University of Southampton
+%
+% author : Rhys Thomas (rt8g15)
+%
+% edited : 2016-11-14
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\renewcommand{\baselinestretch}{1.2} % line spacing
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage[titletoc,toc,title]{appendix}
+\usepackage{subfiles}
+
+\pgfplotsset{compat=1.13}
+\pgfplotsset{unit code/.code={\si{#1}}}
+\usepgfplotslibrary{units}
+
+\graphicspath{ {./images/} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT BEGIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+  
+\begin{center}
+{\Large{\textbf{ELEC2205 D3 -- Two-Stage Amplifier Design}}} \\ [\baselineskip]
+\subfile{info.tex}
+\end{center}
+
+\begin{abstract}
+\end{abstract}
+
+\section{Aim}
+
+\section{Hypothesis}
+
+\section{Results}
+
+\section{Analysis}
+
+\section{Discussion}
+
+\section{Conclusion}
+
+\section{Evaluation}
+
+\begin{appendices}
+    \label{appendix}
+    \section{Some appendix}
+    \label{app:one}
+\end{appendices}
+
+\bibliographystyle{IEEEtran}
+% IEEEabrv abbreviates journal titles in accordance to IEEE standards 
+\bibliography{mybib}
+
+\end{document}
