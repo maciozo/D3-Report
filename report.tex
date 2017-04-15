@@ -60,7 +60,7 @@
     \label{fig:stage1}
 \end{figure}
 
-In order to derive the voltage gain of this circuit, we need to analyse it using a small signal model. The hybrid-\textpi\ model will be used.
+In order to derive the voltage gain of this circuit, we need to analyse it using a small signal model. The hybrid-\textpi\ model (figure~\ref{fig:stage1hpi}) will be used.
 
 \begin{figure}[h]
 \centering
@@ -68,6 +68,29 @@ In order to derive the voltage gain of this circuit, we need to analyse it using
     \caption{Hybrid-\textpi\ model of the first stage of the amplifier.}
     \label{fig:stage1hpi}
 \end{figure}
+
+Using Kirchoff's current law on the base:
+
+\begin{gather*}
+\frac{v_b - v_s}{R_s} + \frac{v_b}{R_2} + \frac{v_b}{R_1} - \frac{v_b - v_e}{r_\pi} = 0\\
+\frac{v_b - v_s}{R_s} + v_b \left(\frac{1}{R_1} + \frac{1}{R_2} \right) - \frac{v_b - v_e}{r_\pi} = 0
+\end{gather*}
+
+It can be seen that $v_\pi = v_b - v_e$. The small signal output resistance, $r_\pi$, is defined as $\frac{\beta}{g_m}$~\cite[p. 29]{ADAIC}.
+
+Using Kirchoff's current law on the emitter:
+
+\begin{gather*}
+\frac{v_e - v_b}{r_\pi} + g_m (v_b - v_e) - \frac{v_e}{R_{e2}} - \frac{v_e - v_c}{r_0} = 0\\
+\textrm{Assuming $r_0$ is large: } \frac{v_e - v_b}{r_\pi} + g_m (v_b - v_e) - \frac{v_e}{R_{e2}} = 0
+\end{gather*}
+
+Using Kirchoff's current law on the collector:
+
+\begin{gather*}
+\frac{-v_c}{R_c} - g_m(v_b - v_e) = 0
+\end{gather*}
+
 
 \section{Voltage Gain Measurement}
 
