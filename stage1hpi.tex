@@ -1,0 +1,35 @@
+\begin{circuitikz}
+    \draw (0, 0)
+    to[sV, v = $v_s$] (0, 4) % vs
+    to[R = $R_s$, -*] (2, 4) % Rs
+    to[R = $R_2$, -*] (2, 0) % R2
+    to[short] (0, 0);
+    
+    \draw (2, 4)
+    to[short, -*] (4, 4)
+    to[R = $R_1$, -*] (4, 0) % R1
+    to[short] (2, 0);
+    
+    \draw (4, 4)
+    to[short, i_ = $i_b$, l^ = B] (6, 4)
+    to[R = $r_\pi$, -*, v_ = $v_\pi$] (6, 2) % r_pi
+    to[R = $R_{e2}$, -*] (6, 0) % Re2
+    node[ground](GND) {}
+    to[short] (4, 0);
+    
+    \draw (6, 2)
+    to[short, l_ = E] (10, 2);
+    
+    \draw (10, 4)
+    to[R = $r_o$, *-] (10, 2); % Ouput impedance?
+    
+    \draw (10, 4)
+    to[short] (8, 4)
+    to[european current source, i = $g_m v_\pi$, -*] (8, 2); % Current source
+    
+    \draw (10, 4)
+    to[short, l^ = C] (12, 4)
+    to[R = $R_C$] (12, 0) % Rc
+    to[short] (6, 0);
+    
+\end{circuitikz}
