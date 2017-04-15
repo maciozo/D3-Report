@@ -23,12 +23,18 @@
 \usepackage{mathtools}
 \usepackage[titletoc,toc,title]{appendix}
 \usepackage{subfiles}
+\usepackage{pgfplots}
+\usepackage[european]{circuitikz}
+\usepackage{textgreek}
 
 \pgfplotsset{compat=1.13}
 \pgfplotsset{unit code/.code={\si{#1}}}
 \usepgfplotslibrary{units}
 
 \graphicspath{ {./images/} }
+
+\usepackage{newunicodechar}
+\newunicodechar{p}{\ifmmode\pi\else\textpi\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DOCUMENT BEGIN
@@ -43,19 +49,31 @@
 \begin{abstract}
 \end{abstract}
 
-\section{Aim}
+\section{Theoretical Design}
+\subsection{Voltage Gain Derivation}
+\subsubsection{Stage 1}
 
-\section{Hypothesis}
+\begin{figure}[h]
+\centering
+    \subfile{stage1Circuit.tex}
+    \caption{Circuit diagram of the first stage of the amplifier.}
+    \label{fig:stage1}
+\end{figure}
 
-\section{Results}
+In order to derive the voltage gain of this circuit, we need to analyse it using a small signal model. The hybrid-\textpi\ model will be used.
 
-\section{Analysis}
+\begin{figure}[h]
+\centering
+    \subfile{stage1hpi.tex}
+    \caption{Hybrid-\textpi\ model of the first stage of the amplifier.}
+    \label{fig:stage1hpi}
+\end{figure}
 
-\section{Discussion}
+\section{Voltage Gain Measurement}
 
-\section{Conclusion}
+\section{Impedance Measurement}
 
-\section{Evaluation}
+\section{Reflection or w/e}
 
 \begin{appendices}
     \label{appendix}
