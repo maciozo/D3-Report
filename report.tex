@@ -26,6 +26,7 @@
 \usepackage{pgfplots}
 \usepackage[european]{circuitikz}
 \usepackage{textgreek}
+\usepackage{amssymb}
 
 \pgfplotsset{compat=1.13}
 \pgfplotsset{unit code/.code={\si{#1}}}
@@ -71,26 +72,81 @@ In order to derive the voltage gain of this circuit, we need to analyse it using
 
 Using Kirchoff's current law on the base:
 
-\begin{gather*}
-\frac{v_b - v_s}{R_s} + \frac{v_b}{R_2} + \frac{v_b}{R_1} - \frac{v_b - v_e}{r_\pi} = 0\\
-\frac{v_b - v_s}{R_s} + v_b \left(\frac{1}{R_1} + \frac{1}{R_2} \right) - \frac{v_b - v_e}{r_\pi} = 0
-\end{gather*}
+\begin{subequations}
+\begin{align}
+\frac{v_b - v_s}{R_s} + \frac{v_b}{R_2} + \frac{v_b}{R_1} + \frac{v_b - v_e}{r_\pi} &= 0\\
+\frac{v_b - v_s}{R_s} + v_b \left(\frac{1}{R_1} + \frac{1}{R_2} \right) + \frac{v_b - v_e}{r_\pi} &= 0 \label{eq:kclBase}
+\end{align}
+\end{subequations}
 
 It can be seen that $v_\pi = v_b - v_e$. The small signal output resistance, $r_\pi$, is defined as $\frac{\beta}{g_m}$~\cite[p. 29]{ADAIC}.
 
 Using Kirchoff's current law on the emitter:
 
-\begin{gather*}
-\frac{v_e - v_b}{r_\pi} + g_m (v_b - v_e) - \frac{v_e}{R_{e2}} - \frac{v_e - v_c}{r_0} = 0\\
-\textrm{Assuming $r_0$ is large: } \frac{v_e - v_b}{r_\pi} + g_m (v_b - v_e) - \frac{v_e}{R_{e2}} = 0
-\end{gather*}
+\begin{subequations}
+\begin{align}
+&\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} + \frac{v_e - v_c}{r_0} = 0\\
+\textrm{Assuming $r_0$ is large: } &\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} = 0 \label{eq:kclEmitter}
+\end{align}
+\end{subequations}
 
 Using Kirchoff's current law on the collector:
 
-\begin{gather*}
-\frac{-v_c}{R_c} - g_m(v_b - v_e) = 0
-\end{gather*}
+\begin{equation} \label{eq:kclCollector}
+\frac{v_c}{R_c} + g_m(v_b - v_e) = 0
+\end{equation}
 
+Substituting the definition of $r_\pi$ into equation~\ref{eq:kclEmitter}:
+
+\begin{subequations}
+\begin{align}
+\frac{(v_e - v_b)g_m}{\beta} - g_m(v_b - v_e) + \frac{v_e}{R_{e2}} &= 0\\
+g_m \left( \frac{v_e - v_b}{\beta} + (v_e - v_b) \right) + \frac{v_e}{R_{e2}} &= 0\\
+g_m (v_e - v_b) \left( \frac{1}{\beta} + 1 \right) + \frac{v_e}{R_{e2}} &= 0 \label{eq:kclEmitter2}
+\end{align}
+\end{subequations}
+
+Equating equations \ref{eq:kclEmitter2} and \ref{eq:kclCollector}:
+
+\begin{subequations}
+\begin{align}
+g_m (v_e - v_b) \left( \frac{1}{\beta} + 1 \right) + \frac{v_e}{R_{e2}} &= \frac{v_c}{R_c} + g_m(v_b - v_e)\\
+g_m (v_e - v_b) \left( \frac{1}{\beta} + 2 \right) + \frac{v_e}{R_{e2}} &= \frac{v_c}{R_c} \label{eq:emitterEqCollector}
+\end{align}
+\end{subequations}
+
+By Ohm's law:
+
+\begin{subequations}
+\begin{align}
+v_e &= i_e R_{e2}\\
+&= R_{e2} (i_b + i_c)\\
+&= R_{e2} (i_b + \beta i_b)\\
+&= R_{e2} i_b (\beta + 1) \label{eq:v_e}
+\end{align}
+\end{subequations}
+
+\begin{subequations}
+\begin{align}
+v_b - v_e &= r_\pi i_b\\
+\therefore v_b - R_{e2} i_b (\beta + 1) &= r_\pi i_b
+\end{align}
+\end{subequations}
+
+\begin{subequations}
+\begin{align}
+v_c &= -i_c R_c\\
+&= -\beta i_b R_c \label{eq:v_c}
+\end{align}
+\end{subequations}
+
+Substituting equation \ref{eq:v_e} into \ref{eq:emitterEqCollector}
+
+\begin{subequations}
+\begin{align}
+g_m \left(R_{e2} i_b (\beta + 1) - v_b\right) \left( \frac{1}{\beta} + 2 \right) + i_b (\beta + 1) &= \frac{v_c}{R_c}
+\end{align}
+\end{subequations}
 
 \section{Voltage Gain Measurement}
 
