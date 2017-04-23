@@ -55,9 +55,10 @@
 \newpage
 
 \section{Theoretical Design}
-    \subsection{Voltage Gain Derivation}
-        \subsubsection{Stage 1}
-            The amplifier designed was a two-stage amplifier, consisting of a common emitter stage, and a common collector stage.
+    The amplifier designed was a two-stage amplifier, consisting of a common emitter stage, and a common collector stage, in that order. Ideally, an amlifier should have a very high input impedance in order to avoid loading the source, and a very low output impedance. A common emitter provides a high input impedance, and a common collector provides a low output impedance, hence the order.
+    
+    \subsection{Derivations}
+        \subsubsection{Stage 1 - Voltage Gain}
 
             \begin{figure}[h]
             \centering
@@ -107,6 +108,8 @@
                 \frac{v_c}{v_b} = \frac{-g_m R_c}{1 + g_m R_e \left( 1+ \frac{1}{\beta} \right) }
                                 = \frac{-\beta R_c}{r_{\pi} + R_e (\beta + 1)}
             \end{equation}
+            
+            \subsubsection{Stage 1 - Impedance}
                 
             We can also work out the impedance of the base terminal
             
@@ -127,79 +130,207 @@
             \end{equation}
             
         \newpage
-        \subsubsection{Stage 2}
+        \subsubsection{Stage 2 - Voltage Gain}
             \begin{figure}[h]
             \centering
                 \subfile{./circuits/stage2Circuit.tex}
                 \caption{Circuit diagram of the second stage of the amplifier. This is the common collector stage.}
                 \label{fig:stage2}
             \end{figure}
+            
+            \begin{figure}[h]
+            \centering
+                \subfile{./circuits/stage2hpi.tex}
+                \caption{Hybrid-\textpi model of the second stage.}
+                \label{fig:stage2hpi}
+            \end{figure}
+            
+            Using Kirchoff's current law on the emitter
+            
+            \begin{equation}
+                (\beta + 1) \frac{v_{in} - v_{out}}{R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1}} = v_{out} \left( \frac{1}{R_L} + \frac{1}{r_o} \right)
+            \end{equation}
+            
+            We can define some resistance values
+            
+            \begin{subequations} \label{eq:stage2res}
+            \begin{gather}
+                \frac{1}{R_E} = \frac{1}{R_L} + \frac{1}{r_o} \\
+                R = \frac{R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1}}{\beta + 1}
+            \end{gather}
+            \end{subequations}
+            
+            After some manipulation, the voltage gain can be written as
+            
+            \begin{equation} \label{eq:stage2gain}
+                A_v = \frac{1}{1 + \frac{R}{R_E}}
+            \end{equation}
+            
+        \subsubsection{Stage 2 - Impedance}
+        
+            The input impedance can be calculated like so~\cite{wikiCC}
+            
+            \begin{subequations}
+            \begin{align}
+                R_{in} &= \frac{v_{in}}{i_b} \\
+                       &= \frac{R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1}}{1 - A_v} \\
+                       &= \left( R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1} \right) \left( 1 + \frac{R_E}{R} \right) \\
+                       &= R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1} + R_E (\beta + 1)
+            \end{align}
+            \end{subequations}
+            
+            To calculate the output impedance, a current source, $i_\mathrm{x}$ is added, as shown in figure~\ref{fig:stage2hpi2}.
+            
+            \begin{figure}[h]
+            \centering
+                \subfile{./circuits/stage2hpi2.tex}
+                \caption{Hybrid-\textpi model of the second stage for finding output impedance.}
+                \label{fig:stage2hpi2}
+            \end{figure}
+            
+            \begin{subequations}
+            \begin{gather}
+                R_{out} = \frac{v_\mathrm{x}}{i_\mathrm{x}} \\
+                i_b (\beta + 1) = i_\mathrm{x} - \frac{v_\mathrm{x}}{R_E} \\
+                v_\mathrm{x} = i_b (R_s + \left( r_{\pi}^{-1} + R_{3}^{-1} + R_{4}^{-1} \right)^{-1} ) \\
+                R_{out} = \frac{v_\mathrm{x}}{i_\mathrm{x}} = \left( \frac{1}{R} + \frac{1}{R_E} \right)^{-1}
+            \end{gather}
+            \end{subequations}
+            
+    \subsection{Circuit Design}
+        The resistor and capacitor values were found using an existing amplifier method: \cite{ampDesign}.
 
 \newpage
 \section{Voltage Gain Measurement}
     The voltage gain of each stage of the amplifier was measured by supplying an alternating voltage at the input, and measuring the amplitude of the voltage at the output. The gain of both stages combined was also measured this way. The measurements are shown in figure~\ref{fig:oscgain} and consolidated in table~\ref{tab:gain}.
     
+    \begin{figure}[h]
+        \centering
+        \subfloat[Oscilloscope captures of input and output signals][Stage 1]
+        {
+            \includegraphics[width = 0.45\textwidth]{stage1gain.png}
+            \label{fig:oscgain1}
+        }
+        \subfloat[Oscilloscope captures of input and output signals][Stage 2]
+        {
+            \includegraphics[width = 0.45\textwidth]{stage2gain.png}
+            \label{fig:oscgain2}
+        }
+        \qquad
+        \subfloat[Oscilloscope captures of input and output signals][Combined]
+        {
+            \includegraphics[width = 0.4\textwidth]{totalgain.png}
+            \label{fig:oscgaintot}
+        }
+        \caption{Oscilloscope captures of input and output signals. The top waveform (2) in each image is the output, and the bottom (1) is the output.}
+        \label{fig:oscgain}
+    \end{figure}
+
+    \begin{table}[h]
+        \centering
+        \subfloat[][Stage 1]
+        {
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
+                \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Output Voltage} & \SI{2.96}{\volt_{pp}}         \\ \hline
+                \textbf{Gain}           & 5.92                          \\ \hline
+            \end{tabular}
+            \label{tab:s1gain}
+        }
+        \subfloat[][Stage 2]
+        {
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
+                \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Output Voltage} & \SI{558}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Gain}           & 1.01                          \\ \hline
+            \end{tabular}
+            \label{tab:s2gain}
+        }
+        \qquad
+        \subfloat[][Combined]
+        {
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
+                \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Output Voltage} & \SI{2.83}{\volt_{pp}}         \\ \hline
+                \textbf{Gain}           & 5.66                          \\ \hline
+            \end{tabular}
+            \label{tab:scombgain}
+        }
+        \subfloat[][Stage 1 with $C_e$ removed]
+        {
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
+                \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Output Voltage} & \SI{2.48}{\volt_{pp}}         \\ \hline
+                \textbf{Gain}           & 4.96                          \\ \hline
+            \end{tabular}
+            \label{tab:scombgain}
+        }
+        \qquad
+        \subfloat[][Stage 1 with $R_{e1}$ and $R_{e2}$ bridged]
+        {
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
+                \textbf{Input Voltage}  & \SI{20}{\milli\volt_{pp}}    \\ \hline
+                \textbf{Output Voltage} & \SI{1.413}{\volt_{pp}}         \\ \hline
+                \textbf{Gain}           & 70.65                          \\ \hline
+            \end{tabular}
+            \label{tab:scombgain}
+        }
+        \caption{Tables of measurements made from the two amplifier stages, the amplifier with both stages combined, and for the advanced tasks.}
+        \label{tab:gain}
+    \end{table}
+        
+    \subsection{Frequency Response}
+        The frequency and phase response of the combined amplifier was measured, and is shown in figure~\ref{fig:freqResponse}.
+        
         \begin{figure}[h]
-            \centering
-            \subfloat[Oscilloscope captures of input and output signals][Stage 1]
-            {
-                \includegraphics[width = 0.45\textwidth]{stage1gain.png}
-                \label{fig:oscgain1}
-            }
-            \subfloat[Oscilloscope captures of input and output signals][Stage 2]
-            {
-                \includegraphics[width = 0.45\textwidth]{stage2gain.png}
-                \label{fig:oscgain2}
+        \centering
+            \subfloat[Frequency][Frequency response]{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width = \textwidth,
+                        height = 0.3\textheight,
+                        xlabel = {Frequency},
+                        x unit = \si{\hertz},
+                        ylabel = {Gain},
+                        grid = both,
+                        xmode = log
+                        ]
+                        \addplot table[x = Frequency, y = Gain, col sep = comma]{./tables/freqResponse.csv};
+                    \end{axis}
+                \end{tikzpicture}
+                \label{plot:phase}
             }
             \qquad
-            \subfloat[Oscilloscope captures of input and output signals][Combined]
-            {
-                \includegraphics[width = 0.4\textwidth]{totalgain.png}
-                \label{fig:oscgaintot}
+            \subfloat[Phase][Phase response]{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width = \textwidth,
+                        height = 0.3\textheight,
+                        xlabel = {Frequency},
+                        x unit = \si{\hertz},
+                        ylabel = {Phase},
+                        y unit = \si{\degree},
+                        grid = both,
+                        xmode = log
+                        ]
+                        \addplot table[x = Frequency, y = Phase2, col sep = comma]{./tables/freqResponse.csv};
+                    \end{axis}
+                \end{tikzpicture}
+                \label{plot:frequency}
             }
-            \caption{Oscilloscope captures of input and output signals. The top waveform (2) in each image is the output, and the bottom (1) is the output.}
-            \label{fig:oscgain}
+            \caption{Bode plot of the combined two-stage amplifier.}
+            \label{fig:freqResponse}
         \end{figure}
-    
-        \begin{table}[h]
-            \centering
-            \subfloat[][Stage 1]
-            {
-                \begin{tabular}{|l|l|}
-                    \hline
-                    \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
-                    \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
-                    \textbf{Output Voltage} & \SI{2.96}{\volt_{pp}}         \\ \hline
-                    \textbf{Gain}           & 5.92                          \\ \hline
-                \end{tabular}
-                \label{tab:s1gain}
-            }
-            \subfloat[][Stage 2]
-            {
-                \begin{tabular}{|l|l|}
-                    \hline
-                    \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
-                    \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
-                    \textbf{Output Voltage} & \SI{558}{\milli\volt_{pp}}    \\ \hline
-                    \textbf{Gain}           & 1.01                          \\ \hline
-                \end{tabular}
-                \label{tab:s2gain}
-            }
-            \qquad
-            \subfloat[][Combined]
-            {
-                \begin{tabular}{|l|l|}
-                    \hline
-                    \textbf{Frequency}      & \SI{1}{\kilo\hertz}           \\ \hline
-                    \textbf{Input Voltage}  & \SI{500}{\milli\volt_{pp}}    \\ \hline
-                    \textbf{Output Voltage} & \SI{2.83}{\volt_{pp}}         \\ \hline
-                    \textbf{Gain}           & 5.66                          \\ \hline
-                \end{tabular}
-                \label{tab:scombgain}
-            }
-            \caption{Tables of measurements made from the two amplifier stages, and the amplifier with both stages combined.}
-            \label{tab:gain}
-        \end{table}
 
 \newpage
 \section{Impedance Measurement}
