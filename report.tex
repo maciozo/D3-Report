@@ -55,102 +55,85 @@
 \newpage
 
 \section{Theoretical Design}
-\subsection{Voltage Gain Derivation}
-\subsubsection{Stage 1}
+    \subsection{Voltage Gain Derivation}
+        \subsubsection{Stage 1}
+            The amplifier designed was a two-stage amplifier, consisting of a common emitter stage, and a common collector stage.
 
-\begin{figure}[h]
-\centering
-    \subfile{./circuits/stage1Circuit.tex}
-    \caption{Circuit diagram of the first stage of the amplifier.}
-    \label{fig:stage1}
-\end{figure}
+            \begin{figure}[h]
+            \centering
+                \subfile{./circuits/stage1Circuit.tex}
+                \caption{Circuit diagram of the first stage of the amplifier. This is the common emitter stage.}
+                \label{fig:stage1}
+            \end{figure}
 
-In order to derive the voltage gain of this circuit, we need to analyse it using a small signal model. The hybrid-\textpi\ model (figure~\ref{fig:stage1hpi}) will be used.
+            In order to derive the voltage gain of this circuit, we need to analyse it using a small signal model. The hybrid-\textpi\ model (figure~\ref{fig:stage1hpi}) will be used.
 
-\begin{figure}[h]
-\centering
-    \subfile{./circuits/stage1hpi.tex}
-    \caption{Hybrid-\textpi\ model of the first stage of the amplifier.}
-    \label{fig:stage1hpi}
-\end{figure}
+            \begin{figure}[h]
+            \centering
+                \subfile{./circuits/stage1hpi.tex}
+                \caption{Hybrid-\textpi\ model of the first stage of the amplifier.}
+                \label{fig:stage1hpi}
+            \end{figure}
 
-Using Kirchoff's current law on the base:
+            Using Kirchoff's current law on the base:
 
-\begin{subequations}
-\begin{align}
-\frac{v_b - v_s}{R_s} + \frac{v_b}{R_2} + \frac{v_b}{R_1} + \frac{v_b - v_e}{r_\pi} &= 0\\
-\frac{v_b - v_s}{R_s} + v_b \left(\frac{1}{R_1} + \frac{1}{R_2} \right) + \frac{v_b - v_e}{r_\pi} &= 0 \label{eq:kclBase}
-\end{align}
-\end{subequations}
+            \begin{subequations}
+            \begin{align}
+                \frac{v_b - v_s}{R_s} + \frac{v_b}{R_2} + \frac{v_b}{R_1} + \frac{v_b - v_e}{r_\pi} &= 0\\
+                \frac{v_b - v_s}{R_s} + v_b \left(\frac{1}{R_1} + \frac{1}{R_2} \right) + \frac{v_b - v_e}{r_\pi} &= 0 \label{eq:kclBase}
+            \end{align}
+            \end{subequations}
 
-It can be seen that $v_\pi = v_b - v_e$. The small signal output resistance, $r_\pi$, is defined as $\frac{\beta}{g_m}$~\cite[p. 29]{ADAIC}.
+            It can be seen that $v_\pi = v_b - v_e$. The small signal output resistance, $r_\pi$, is defined as $\frac{\beta}{g_m}$~\cite[p. 29]{ADAIC}.
 
-Using Kirchoff's current law on the emitter:
+            Using Kirchoff's current law on the emitter:
 
-\begin{subequations}
-\begin{align}
-&\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} + \frac{v_e - v_c}{r_0} = 0\\
-\textrm{Assuming $r_0$ is large: } &\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} = 0 \label{eq:kclEmitter}
-\end{align}
-\end{subequations}
+            \begin{subequations}
+            \begin{align}
+                &\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} + \frac{v_e - v_c}{r_0} = 0\\
+                \textrm{Assuming $r_0$ is large: } &\frac{v_e - v_b}{r_\pi} - g_m (v_b - v_e) + \frac{v_e}{R_{e2}} = 0 \label{eq:kclEmitter}
+            \end{align}
+            \end{subequations}
 
-Using Kirchoff's current law on the collector:
+            Using Kirchoff's current law on the collector:
 
-\begin{equation} \label{eq:kclCollector}
-\frac{v_c}{R_c} + g_m(v_b - v_e) = 0
-\end{equation}
+            \begin{equation} \label{eq:kclCollector}
+                \frac{v_c}{R_c} + g_m(v_b - v_e) = 0
+            \end{equation}
 
-Substituting the definition of $r_\pi$ into equation~\ref{eq:kclEmitter}:
-
-\begin{subequations}
-\begin{align}
-\frac{(v_e - v_b)g_m}{\beta} - g_m(v_b - v_e) + \frac{v_e}{R_{e2}} &= 0\\
-g_m \left( \frac{v_e - v_b}{\beta} + (v_e - v_b) \right) + \frac{v_e}{R_{e2}} &= 0\\
-g_m (v_e - v_b) \left( \frac{1}{\beta} + 1 \right) + \frac{v_e}{R_{e2}} &= 0 \label{eq:kclEmitter2}
-\end{align}
-\end{subequations}
-
-Equating equations \ref{eq:kclEmitter2} and \ref{eq:kclCollector}:
-
-\begin{subequations}
-\begin{align}
-g_m (v_e - v_b) \left( \frac{1}{\beta} + 1 \right) + \frac{v_e}{R_{e2}} &= \frac{v_c}{R_c} + g_m(v_b - v_e)\\
-g_m (v_e - v_b) \left( \frac{1}{\beta} + 2 \right) + \frac{v_e}{R_{e2}} &= \frac{v_c}{R_c} \label{eq:emitterEqCollector}
-\end{align}
-\end{subequations}
-
-By Ohm's law:
-
-\begin{subequations}
-\begin{align}
-v_e &= i_e R_{e2}\\
-&= R_{e2} (i_b + i_c)\\
-&= R_{e2} (i_b + \beta i_b)\\
-&= R_{e2} i_b (\beta + 1) \label{eq:v_e}
-\end{align}
-\end{subequations}
-
-\begin{subequations}
-\begin{align}
-v_b - v_e &= r_\pi i_b\\
-\therefore v_b - R_{e2} i_b (\beta + 1) &= r_\pi i_b
-\end{align}
-\end{subequations}
-
-\begin{subequations}
-\begin{align}
-v_c &= -i_c R_c\\
-&= -\beta i_b R_c \label{eq:v_c}
-\end{align}
-\end{subequations}
-
-Substituting equation \ref{eq:v_e} into \ref{eq:emitterEqCollector}
-
-\begin{subequations}
-\begin{align}
-g_m \left(R_{e2} i_b (\beta + 1) - v_b\right) \left( \frac{1}{\beta} + 2 \right) + i_b (\beta + 1) &= \frac{v_c}{R_c}
-\end{align}
-\end{subequations}
+            After some tedious manipulation
+            
+            \begin{equation} \label{eq:s1gain}
+                \frac{v_c}{v_b} = \frac{-g_m R_c}{1 + g_m R_e \left( 1+ \frac{1}{\beta} \right) }
+                                = \frac{-\beta R_c}{r_{\pi} + R_e (\beta + 1)}
+            \end{equation}
+                
+            We can also work out the impedance of the base terminal
+            
+            \begin{subequations}
+            \begin{align}
+                R_b &= \frac{v_b}{i_b}\\
+                    &= \frac{v_b}{(v_b - v_e) / r_{\pi}}\\
+                    &= \frac{r_{\pi}}{1 - (v_e / v_b)}\\
+                    &= r_{\pi} \left( 1 + g_m R_e \left( 1 + \frac{1}{\beta} \right) \right)\\
+                    &= r_{\pi} + R_e (\beta + 1)
+            \end{align}
+            \end{subequations}
+            
+            Looking at the hybrid-\textpi model (figure \ref{fig:stage1hpi}), we can see that the overall impedance is therefore the parallel combination of $R_2$, $R_1$, and $R_b$.
+            
+            \begin{equation}
+                R_{in} = \left( \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{r_{\pi} + R_e (\beta + 1)} \right) ^{-1}
+            \end{equation}
+            
+        \newpage
+        \subsubsection{Stage 2}
+            \begin{figure}[h]
+            \centering
+                \subfile{./circuits/stage2Circuit.tex}
+                \caption{Circuit diagram of the second stage of the amplifier. This is the common collector stage.}
+                \label{fig:stage2}
+            \end{figure}
 
 \newpage
 \section{Voltage Gain Measurement}

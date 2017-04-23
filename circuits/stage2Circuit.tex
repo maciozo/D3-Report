@@ -1,0 +1,30 @@
+\begin{circuitikz}
+    
+    \draw (0, 0)
+    node[label = left:$V_{i2}$]{}
+    to[C = $C_c$, o-] (2, 0) % Cc
+    to[short, -*] (3, 0)
+    to[short] (4.2, 0);
+    
+    \draw (3, 0)
+    to[R = $R_3$] (3, 2) % R3
+    to[short, l^ = $V_{cc}$] (5, 2) % Vcc
+    to[short] (5, 0.7);
+    
+    \draw (3, 0)
+    to[R = $R_4$, -*] (3, -3) % R4
+    node[ground](GND) {}
+    to[short] (5, -3)
+    to[R = $R_e$, -*] (5, -1)
+    to[short] (5, -0.7);
+    
+    \draw (5, -1)
+    to[short, -o] (6, -1)
+    node[label = right:$V_{o}$]{};
+    
+    \draw (5, 0) node[npn](npn1) {}
+        (npn1.base) node[anchor = south] {B}
+        (npn1.collector) node[anchor = east] {C}
+        (npn1.emitter) node[anchor = east] {E};
+    
+\end{circuitikz}
