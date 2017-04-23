@@ -28,6 +28,8 @@
 \usepackage{textgreek}
 \usepackage{amssymb}
 \usepackage{subfig}
+\usepackage{csvsimple}
+\usepackage{pdfpages}
 
 \pgfplotsset{compat=1.13}
 \pgfplotsset{unit code/.code={\si{#1}}}
@@ -49,6 +51,7 @@
 \end{center}
 
 \begin{abstract}
+    A two stage analogue amplifier was designed and built. It consisted of a common emitter stage followed by a common collector stage. An overall gain of 5.66 was achieved, with an input impedance of \SI{44.6}{\kilo\ohm}, and an output impedance of \SI{12.8}{\ohm}. The gain was within specification, input impedance exceeded it, output impedance did not meet the specification.
 \end{abstract}
 
 \tableofcontents
@@ -290,7 +293,7 @@
     \end{table}
         
     \subsection{Frequency Response}
-        The frequency and phase response of the combined amplifier was measured, and is shown in figure~\ref{fig:freqResponse}.
+        The frequency and phase response of the first stage was measured, and is shown in figure~\ref{fig:freqResponse}.
         
         \begin{figure}[h]
         \centering
@@ -328,7 +331,7 @@
                 \end{tikzpicture}
                 \label{plot:frequency}
             }
-            \caption{Bode plot of the combined two-stage amplifier.}
+            \caption{Bode plot of the first stage of the amplifier.}
             \label{fig:freqResponse}
         \end{figure}
 
@@ -439,17 +442,26 @@
             As shown by equation set~\ref{eq:Rout}, the output impedance of the combined amplifier was calulated to be \SI{12.8}{\ohm}.
 
 \newpage
-\section{Reflection or w/e}
-
-\newpage
-\begin{appendices}
-    \label{appendix}
-    \section{Some appendix}
-    \label{app:one}
-\end{appendices}
+\section{Reflection}
+    \begin{table}[h]
+    \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+                                      & \textbf{Specification}          & \textbf{Achieved}         \\ \hline
+            \textbf{Overall Gain}     & $6 \pm 0.6$                     & 5.66                      \\ \hline
+            \textbf{Input Impedance}  & $40 \pm 4 \mathrm{k}\Omega$     & $\SI{44.6}{\kilo\ohm}$    \\ \hline
+            \textbf{Output Impedance} & $1.3 \pm 0.13 \Omega$           & $\SI{12.8}{\ohm}$    \\ \hline
+            \end{tabular}
+    \caption{Overall performance of the amplifier compared to the specification}
+    \label{tab:overall}
+    \end{table}
+    
+    While the overall gain of the amplifier was within the given specification, and the input impedance exceeds the specification, the output impedance ended up being significantly higher than required.
 
 \bibliographystyle{IEEEtran}
 % IEEEabrv abbreviates journal titles in accordance to IEEE standards 
 \bibliography{mybib}
+
+\includepdf{completionForm.pdf}
 
 \end{document}
