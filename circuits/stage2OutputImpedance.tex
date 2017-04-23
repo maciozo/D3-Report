@@ -1,0 +1,28 @@
+\begin{circuitikz}
+    
+    \draw (0, 0) node[npn](npn1) {}
+        (npn1.base) node[anchor = south] {B}
+        (npn1.collector) node[anchor = east] {C}
+        (npn1.emitter) node[anchor = east] {E};
+        
+    \draw (0, -0.5)
+    to[short, -*] (0, -1)
+    to[short] (2, -1)
+    to[C, -*] (2, -3)
+    to[R = $\SI{68}{\ohm}$, -*] (2, -5)
+    to[short] (2, -6)
+    to[short] (0, -6);
+    
+    \draw (0, -0.5)
+    to[R = $R_e$] (0, -6)
+    node[ground](GND) {};
+    
+    \draw[dashed] (2, -3)
+    to[short] (3, -3)
+    node[label = below:$V_{o2}'$]{};
+    
+    \draw[dashed] (2, -5)
+    to[short] (3, -5)
+    node[label = below:$V_{o2}$]{};
+    
+\end{circuitikz}

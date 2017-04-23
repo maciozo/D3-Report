@@ -1,0 +1,26 @@
+\begin{circuitikz}
+    
+    \draw (3.5, 5) % R1
+    to[short, l^ = $V_{CC}$, o-] (5.5, 5) % Vcc
+    to[R = $R_C$] (5.5, 3) % Rc
+    to[short, -*] (5.5, 2.8)
+    to[C = $C_c$, -*] (7.5, 2.8) %Cc
+    to[R = $\SI{1.8}{\kilo\ohm}$, v = $V_{o2}$, -*] (9.5, 2.8)
+    to[short, -o] (10.5, 2.8);
+    
+    \draw (5.5, 2) node[npn](npn1) {}
+        (npn1.base) node[anchor = south] {B}
+        (npn1.collector) node[anchor = east] {C}
+        (npn1.emitter) node[anchor = east] {E};
+        
+    \draw (3.5, 2)
+    to[short, o-] (4.7, 2);
+    
+    \draw(5.5, 1.5)
+    to[short, -o] (5.5, 1);
+    
+    \draw[dashed] (7.5, 2.8)
+    to[short] (7.5, 1.8)
+    node[label = below:$V_{o2}'$]{};
+    
+\end{circuitikz}
